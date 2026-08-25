@@ -1,0 +1,36 @@
+DAFE Steel Theme Palette
+The exact color palette shown in the supplied DAFE Steel brand sheet contains five colors:
+Swatch
+Color role
+HEX
+RGB
+<span style="color:#C81D20">■</span>
+Deep red
+#C81D20
+rgb(200, 29, 32)
+<span style="color:#FF5A00">■</span>
+Safety orange
+#FF5A00
+rgb(255, 90, 0)
+<span style="color:#FF9A00">■</span>
+Amber orange
+#FF9A00
+rgb(255, 154, 0)
+<span style="color:#FFC400">■</span>
+Bright yellow
+#FFC400
+rgb(255, 196, 0)
+<span style="color:#2B2F36">■</span>
+Charcoal graphite
+#2B2F36
+rgb(43, 47, 54)
+The warm gradient sequence is Deep Red → Safety Orange → Amber Orange → Bright Yellow, while Charcoal Graphite serves as the primary dark neutral for typography, interfaces, and dark backgrounds.
+CSS Variables
+CSS
+:root {
+  --dafe-red: #C81D20;
+  --dafe-orange: #FF5A00;
+  --dafe-amber: #FF9A00;
+  --dafe-yellow: #FFC400;
+  --dafe-charcoal: #2B2F36;
+}
