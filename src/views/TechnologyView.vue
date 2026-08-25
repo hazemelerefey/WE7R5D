@@ -67,13 +67,13 @@ function defectAlt(id) {
       </div>
 
       <div class="row g-4">
-        <div class="col-lg-7">
-          <figure class="figure-plate mb-0">
+        <div class="col-lg-6">
+          <figure class="figure-plate figure-plate--cap mb-0">
             <img :src="FIGURES.duality" :alt="t('figures.duality')" loading="lazy" />
             <figcaption>{{ t('figures.duality') }}</figcaption>
           </figure>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-6">
           <div class="stack">
             <article
               v-for="(item, i) in t('technology.duality.items')"

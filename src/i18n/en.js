@@ -14,6 +14,10 @@ export default {
       system: 'The System',
       partners: 'Partners',
       overview: 'Overview',
+      railTechnology:
+        'The research behind the detection engine: why steel defects need two branches, and what the benchmarks show.',
+      railSystem:
+        'The complete inspection system across four stages, with the readiness of every module stated plainly.',
       technologyGroups: {
         research: 'Research',
         results: 'Results'
@@ -21,6 +25,8 @@ export default {
       items: {
         duality: 'Morphological duality',
         dualityDesc: 'Why one filter cannot see two defect families',
+        defects: 'Defect library',
+        defectsDesc: 'All six classes as annotated NEU-DET samples',
         module: 'The DAFEGate module',
         moduleDesc: 'Dual-branch edge and texture enhancement',
         gradient: 'Additive vs multiplicative',

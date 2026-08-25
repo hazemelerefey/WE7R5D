@@ -58,12 +58,25 @@
   --dafe-radius-sm: 4px;
   --dafe-header-height: 4rem;
   --dafe-meta-height: 2.25rem;
+  /* Combined header height, used to size the full-viewport stage. */
+  --dafe-header-total: calc(var(--dafe-meta-height) + var(--dafe-header-height));
+  /* Wider than Bootstrap's 1320px xxl container. */
+  --dafe-container: 1560px;
+  --dafe-gutter: 2rem;
 
   /* --- Breakpoints, for reference --- */
   --dafe-min-sm: 576px;
   --dafe-min-md: 768px;
   --dafe-min-lg: 992px;
   --dafe-min-xl: 1200px;
+}
+
+/* Below lg the meta bar is hidden, so the header is the main bar only. */
+@media (max-width: 991.98px) {
+  :root {
+    --dafe-header-total: var(--dafe-header-height);
+    --dafe-gutter: 1.25rem;
+  }
 }
 
 /* Arabic: Cairo carries both roles, keeping the display/body distinction

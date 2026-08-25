@@ -24,6 +24,23 @@ html {
   scroll-padding-top: calc(var(--dafe-header-height) + 4rem);
 }
 
+/* Wider working area than Bootstrap's default so large screens are used
+   properly. Text measure is still capped per-element for readability. */
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+  padding-inline: var(--dafe-gutter);
+}
+@media (min-width: 1400px) {
+  .container,
+  .container-xxl {
+    max-width: var(--dafe-container);
+  }
+}
+
 body {
   margin: 0;
   font-family: var(--dafe-font-body);
@@ -251,14 +268,29 @@ html[dir='rtl'] .link-arrow::after {
   background: #fff;
   border-block-end: 1px solid var(--dafe-line);
 }
+.site-header.is-scrolled {
+  box-shadow: 0 1px 12px rgba(36, 40, 48, 0.08);
+}
 
+/* Utility bar: collapses away on scroll so the main bar stays compact. */
+.header-meta-wrap {
+  background: var(--dafe-surface-2);
+  border-block-end: 1px solid var(--dafe-line);
+  overflow: hidden;
+  height: var(--dafe-meta-height);
+  transition: height 0.18s ease, opacity 0.18s ease;
+}
+.site-header.is-scrolled .header-meta-wrap {
+  height: 0;
+  opacity: 0;
+  border-block-end-color: transparent;
+}
 .header-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  min-height: var(--dafe-meta-height);
-  border-block-end: 1px solid var(--dafe-line-soft);
+  height: var(--dafe-meta-height);
   font-size: 0.8125rem;
 }
 .header-meta a {
@@ -271,17 +303,28 @@ html[dir='rtl'] .link-arrow::after {
 .header-meta__list {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.header-meta__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.header-meta__contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--dafe-ink-2);
 }
 
 .header-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2.5rem;
   min-height: var(--dafe-header-height);
 }
 
@@ -294,9 +337,20 @@ html[dir='rtl'] .link-arrow::after {
   text-decoration: none;
 }
 .brand-link img {
-  height: 38px;
+  height: 36px;
   width: auto;
   display: block;
+}
+
+/* Nav sits directly after the wordmark; utilities are pushed to the end. */
+.header-nav {
+  flex-grow: 1;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
 }
 
 /* --- Main navigation ------------------------------------------------------ */
@@ -355,13 +409,47 @@ html[dir='rtl'] .link-arrow::after {
   inset-inline: 0;
   inset-block-start: 100%;
   background: #fff;
-  border-block-end: 1px solid var(--dafe-line);
-  box-shadow: 0 12px 24px rgba(36, 40, 48, 0.1);
-  padding-block: 2rem;
+  border-block: 1px solid var(--dafe-line);
+  box-shadow: 0 16px 32px rgba(36, 40, 48, 0.12);
+}
+.mega__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+@media (min-width: 992px) {
+  .mega__inner {
+    grid-template-columns: minmax(240px, 20%) 1fr;
+  }
+}
+/* Left rail: the section overview, so the menu always offers a landing page. */
+.mega__rail {
+  padding: 2rem var(--dafe-gutter) 2rem 0;
+  border-inline-end: 1px solid var(--dafe-line);
+}
+html[dir='rtl'] .mega__rail {
+  padding-inline: 0 var(--dafe-gutter);
+}
+.mega__rail-title {
+  font-family: var(--dafe-font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  margin-block-end: 0.5rem;
+}
+.mega__rail-text {
+  font-size: 0.8125rem;
+  color: var(--dafe-ink-3);
+  margin-block-end: 1rem;
+}
+.mega__body {
+  padding: 2rem 0 2rem var(--dafe-gutter);
+}
+html[dir='rtl'] .mega__body {
+  padding-inline: var(--dafe-gutter) 0;
 }
 .mega__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem 2.5rem;
 }
 .mega__label {
@@ -376,7 +464,7 @@ html[dir='rtl'] .link-arrow::after {
 }
 .mega__link {
   display: block;
-  padding-block: 0.4rem;
+  padding-block: 0.45rem;
   color: var(--dafe-ink);
   font-weight: 600;
   font-size: 0.9375rem;
@@ -451,65 +539,115 @@ html[dir='rtl'] .link-arrow::after {
 
 @media (max-width: 991.98px) {
   .nav-main,
-  .header-meta {
+  .header-meta-wrap {
     display: none;
   }
   .nav-toggle {
     display: flex;
   }
+  .header-bar {
+    justify-content: space-between;
+    gap: 1rem;
+  }
 }
 
-/* --- Content stage (photographic hero) ----------------------------------- */
+/* --- Content stage (photographic / video hero) --------------------------- */
 .stage {
   position: relative;
   background: var(--dafe-dark);
   color: #fff;
   overflow: hidden;
+  display: flex;
+  align-items: flex-end;
 }
-/* Scaled slightly past the frame so the softened edges never show. */
-.stage__img {
+
+/* Full-viewport variant, sized so the header never pushes it off screen.
+   Reserved for the landing stage; interior pages use the default height. */
+.stage--full {
+  min-height: calc(100svh - var(--dafe-header-total));
+}
+@supports not (height: 100svh) {
+  .stage--full {
+    min-height: calc(100vh - var(--dafe-header-total));
+  }
+}
+
+/* Media layer takes either an <img> or a <video> without layout change. */
+.stage__media {
   position: absolute;
   inset: 0;
+}
+.stage__media > img,
+.stage__media > video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
   filter: grayscale(1);
   transform: scale(1.04);
 }
-/* Directional scrim so the text side stays legible over the photograph. */
+/* Directional scrim so the text side stays legible over the media. */
 .stage__scrim {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to right,
     rgba(23, 26, 31, 0.95) 0%,
-    rgba(23, 26, 31, 0.9) 45%,
-    rgba(23, 26, 31, 0.72) 100%
+    rgba(23, 26, 31, 0.88) 42%,
+    rgba(23, 26, 31, 0.66) 100%
   );
 }
 html[dir='rtl'] .stage__scrim {
   background: linear-gradient(
     to left,
     rgba(23, 26, 31, 0.95) 0%,
-    rgba(23, 26, 31, 0.9) 45%,
-    rgba(23, 26, 31, 0.72) 100%
+    rgba(23, 26, 31, 0.88) 42%,
+    rgba(23, 26, 31, 0.66) 100%
   );
 }
+/* A second scrim along the bottom edge anchors the text block. */
+.stage--full .stage__scrim::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(23, 26, 31, 0.75), transparent);
+}
+
 .stage__inner {
   position: relative;
+  width: 100%;
   padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+.stage--full .stage__inner {
+  padding-block: clamp(3rem, 7vw, 6rem);
 }
 .stage h1 {
   color: #fff;
 }
 .stage__text {
-  max-width: 56ch;
+  max-width: 60ch;
+}
+.stage--full .stage__text {
+  max-width: 68ch;
+}
+.stage--full h1 {
+  font-size: clamp(2.25rem, 5vw, 4rem);
 }
 .stage .lead {
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.85);
 }
 .stage .eyebrow {
   color: var(--dafe-yellow);
+}
+
+/* Breadcrumb sits at the top of a full stage rather than beside the text. */
+.stage__top {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  padding-block-start: 1.5rem;
 }
 
 /* Breadcrumb */
@@ -697,6 +835,14 @@ html[dir='rtl'] .stage__scrim {
 .figure-plate img {
   display: block;
   width: 100%;
+}
+/* Tall, near-square plates are capped so they cannot outrun the column
+   beside them and leave dead space. */
+.figure-plate--cap img {
+  max-height: 560px;
+  width: 100%;
+  object-fit: contain;
+  background: #fff;
 }
 .figure-plate figcaption {
   padding: 0.85rem 1.1rem;

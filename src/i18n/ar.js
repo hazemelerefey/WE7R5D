@@ -14,6 +14,10 @@ export default {
       system: 'المنظومة',
       partners: 'الشراكات',
       overview: 'نظرة عامة',
+      railTechnology:
+        'البحث الكامن وراء محرّك الكشف: لماذا تحتاج عيوب الصلب مسارين، وما تقوله القياسات المرجعية.',
+      railSystem:
+        'منظومة الفحص الكاملة على أربع مراحل، مع بيان صريح لدرجة جهوزية كل وحدة.',
       technologyGroups: {
         research: 'البحث',
         results: 'النتائج'
@@ -21,6 +25,8 @@ export default {
       items: {
         duality: 'الثنائية الشكلية',
         dualityDesc: 'لماذا لا يكفي مُرشِّح واحد لعائلتين من العيوب',
+        defects: 'مكتبة العيوب',
+        defectsDesc: 'الأصناف الستة كعيّنات موسومة من NEU-DET',
         module: 'وحدة DAFEGate',
         moduleDesc: 'تحسين مزدوج المسار للحدود والنسيج',
         gradient: 'الجمعي مقابل الضربي',

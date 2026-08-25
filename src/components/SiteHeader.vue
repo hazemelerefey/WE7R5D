@@ -7,6 +7,7 @@ import { LINKS } from '@/data/results.js'
 const route = useRoute()
 const openMenu = ref(null)
 const mobileOpen = ref(false)
+const scrolled = ref(false)
 const headerEl = ref(null)
 
 const menus = computed(() => [
@@ -14,11 +15,13 @@ const menus = computed(() => [
     id: 'technology',
     label: t('common.nav.technology'),
     to: '/technology',
+    railText: t('common.nav.railTechnology'),
     groups: [
       {
         label: t('common.nav.technologyGroups.research'),
         links: [
           { to: '/technology#duality', label: t('common.nav.items.duality'), desc: t('common.nav.items.dualityDesc') },
+          { to: '/technology#defects', label: t('common.nav.items.defects'), desc: t('common.nav.items.defectsDesc') },
           { to: '/technology#module', label: t('common.nav.items.module'), desc: t('common.nav.items.moduleDesc') },
           { to: '/technology#gradient', label: t('common.nav.items.gradient'), desc: t('common.nav.items.gradientDesc') }
         ]
@@ -37,6 +40,7 @@ const menus = computed(() => [
     id: 'system',
     label: t('common.nav.system'),
     to: '/system',
+    railText: t('common.nav.railSystem'),
     groups: [
       {
         label: t('common.nav.overview'),
@@ -63,48 +67,61 @@ function onKeydown(e) {
 function onDocClick(e) {
   if (headerEl.value && !headerEl.value.contains(e.target)) close()
 }
+function onScroll() {
+  scrolled.value = window.scrollY > 24
+}
 
 watch(() => route.fullPath, close)
 
 onMounted(() => {
   document.addEventListener('keydown', onKeydown)
   document.addEventListener('click', onDocClick)
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
 })
 onUnmounted(() => {
   document.removeEventListener('keydown', onKeydown)
   document.removeEventListener('click', onDocClick)
+  window.removeEventListener('scroll', onScroll)
 })
 </script>
 
 <template>
-  <header ref="headerEl" class="site-header">
-    <!-- Utility / meta bar -->
-    <div class="container">
-      <div class="header-meta">
-        <ul class="header-meta__list">
-          <li>
-            <a :href="LINKS.repo" target="_blank" rel="noopener">{{ t('common.meta.research') }}</a>
-          </li>
-          <li>
-            <a :href="LINKS.demo" target="_blank" rel="noopener">{{ t('common.meta.demo') }}</a>
-          </li>
-          <li>
-            <RouterLink to="/system#contact">{{ t('common.meta.contact') }}</RouterLink>
-          </li>
-        </ul>
+  <header ref="headerEl" class="site-header" :class="{ 'is-scrolled': scrolled }">
+    <!-- Utility bar -->
+    <div class="header-meta-wrap">
+      <div class="container">
+        <div class="header-meta">
+          <ul class="header-meta__list">
+            <li>
+              <a :href="LINKS.repo" target="_blank" rel="noopener">{{ t('common.meta.research') }}</a>
+            </li>
+            <li>
+              <a :href="LINKS.demo" target="_blank" rel="noopener">{{ t('common.meta.demo') }}</a>
+            </li>
+            <li>
+              <RouterLink to="/system#partners">{{ t('common.nav.partners') }}</RouterLink>
+            </li>
+          </ul>
 
-        <div class="lang-switch" role="group" :aria-label="t('common.langLabel')">
-          <button
-            v-for="l in LOCALES"
-            :key="l.code"
-            type="button"
-            :class="{ 'is-active': locale === l.code }"
-            :aria-pressed="locale === l.code"
-            :lang="l.code"
-            @click="setLocale(l.code)"
-          >
-            {{ l.label }}
-          </button>
+          <div class="header-meta__right">
+            <RouterLink to="/system#contact" class="header-meta__contact">
+              {{ t('common.meta.contact') }}
+            </RouterLink>
+            <div class="lang-switch" role="group" :aria-label="t('common.langLabel')">
+              <button
+                v-for="l in LOCALES"
+                :key="l.code"
+                type="button"
+                :class="{ 'is-active': locale === l.code }"
+                :aria-pressed="locale === l.code"
+                :lang="l.code"
+                @click="setLocale(l.code)"
+              >
+                {{ l.label }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -116,7 +133,7 @@ onUnmounted(() => {
           <img src="/brand/dafe-logo.webp" :alt="`${t('common.brandName')} — ${t('common.tagline')}`" />
         </RouterLink>
 
-        <nav class="d-none d-lg-block" :aria-label="t('common.mainNav')">
+        <nav class="header-nav d-none d-lg-block" :aria-label="t('common.mainNav')">
           <ul class="nav-main">
             <li v-for="m in menus" :key="m.id" class="nav-main__item">
               <button
@@ -138,13 +155,7 @@ onUnmounted(() => {
           </ul>
         </nav>
 
-        <div class="d-flex align-items-center gap-2">
-          <a :href="LINKS.demo" target="_blank" rel="noopener" class="btn-dafe d-none d-lg-inline-flex">
-            {{ t('common.cta.tryDemo') }}
-          </a>
-
-          <!-- The meta bar is hidden below lg, so the language switcher is
-               mirrored here to keep both locales reachable on mobile. -->
+        <div class="header-actions">
           <div class="lang-switch d-lg-none" role="group" :aria-label="t('common.langLabel')">
             <button
               v-for="l in LOCALES"
@@ -158,6 +169,10 @@ onUnmounted(() => {
               {{ l.label }}
             </button>
           </div>
+
+          <a :href="LINKS.demo" target="_blank" rel="noopener" class="btn-dafe d-none d-lg-inline-flex">
+            {{ t('common.cta.tryDemo') }}
+          </a>
 
           <button
             class="nav-toggle"
@@ -176,20 +191,23 @@ onUnmounted(() => {
     <div v-if="openMenu" class="mega">
       <div class="container">
         <template v-for="m in menus" :key="m.id">
-          <div v-if="openMenu === m.id" class="mega__grid">
-            <div v-for="g in m.groups" :key="g.label">
-              <p class="mega__label">{{ g.label }}</p>
-              <RouterLink v-for="l in g.links" :key="l.to" :to="l.to" class="mega__link">
-                {{ l.label }}
-                <span class="mega__desc">{{ l.desc }}</span>
-              </RouterLink>
+          <div v-if="openMenu === m.id" class="mega__inner">
+            <div class="mega__rail d-none d-lg-block">
+              <p class="mega__rail-title">{{ m.label }}</p>
+              <p class="mega__rail-text">{{ m.railText }}</p>
+              <RouterLink :to="m.to" class="link-arrow">{{ t('common.nav.overview') }}</RouterLink>
             </div>
-            <div>
-              <p class="mega__label">{{ t('common.nav.overview') }}</p>
-              <RouterLink :to="m.to" class="btn-dafe-ghost">
-                {{ m.label }}
-                <span class="btn-arrow" aria-hidden="true">→</span>
-              </RouterLink>
+
+            <div class="mega__body">
+              <div class="mega__grid">
+                <div v-for="g in m.groups" :key="g.label">
+                  <p class="mega__label">{{ g.label }}</p>
+                  <RouterLink v-for="l in g.links" :key="l.to" :to="l.to" class="mega__link">
+                    {{ l.label }}
+                    <span class="mega__desc">{{ l.desc }}</span>
+                  </RouterLink>
+                </div>
+              </div>
             </div>
           </div>
         </template>
@@ -210,6 +228,9 @@ onUnmounted(() => {
         <div class="mobile-nav__group">
           <RouterLink to="/system#partners" class="mega__link fw-bold">
             {{ t('common.nav.partners') }}
+          </RouterLink>
+          <RouterLink to="/system#contact" class="mega__link">
+            {{ t('common.meta.contact') }}
           </RouterLink>
           <a :href="LINKS.demo" target="_blank" rel="noopener" class="mega__link">
             {{ t('common.meta.demo') }}

@@ -14,6 +14,7 @@ const labels = computed(() => METRIC_LABELS[locale.value] ?? METRIC_LABELS.en)
 
 <template>
   <StageHero
+    full
     :eyebrow="t('home.stage.eyebrow')"
     :title="t('home.stage.title')"
     :lead="t('home.stage.lead')"
