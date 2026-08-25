@@ -6,6 +6,7 @@ import StatusChip from '@/components/StatusChip.vue'
 import { t, countPhrase } from '@/i18n/index.js'
 import { SYSTEM_STAGES, STATUS_COUNTS } from '@/data/system.js'
 import { LINKS } from '@/data/results.js'
+import { FIGURES } from '@/data/figures.js'
 
 const sections = computed(() => [
   { id: 'readiness', label: t('common.nav.items.readiness') },
@@ -21,12 +22,14 @@ const sections = computed(() => [
     :title="t('system.stage.title')"
     :lead="t('system.stage.lead')"
     :crumb="t('common.nav.system')"
+    :image="FIGURES.hero"
+    :image-alt="t('figures.hero')"
   />
 
   <JumpMenu :sections="sections" />
 
-  <!-- Honesty statement first -->
-  <section class="section section--muted" style="padding-block: 2.5rem">
+  <!-- Honesty statement -->
+  <section class="section section--tight">
     <div class="container">
       <div class="callout">
         <strong class="d-block mb-2">{{ t('system.today.title') }}</strong>
@@ -35,29 +38,29 @@ const sections = computed(() => [
     </div>
   </section>
 
-  <!-- Readiness model -->
-  <section id="readiness" class="section section--dark">
+  <!-- Readiness -->
+  <section id="readiness" class="section section--muted">
     <div class="container">
       <div class="section-head">
+        <p class="eyebrow">{{ t('system.stage.eyebrow') }}</p>
         <h2 class="headline--underlined">{{ t('system.readiness.title') }}</h2>
         <p class="lead mt-3">{{ t('system.readiness.lead') }}</p>
       </div>
 
       <div class="readiness">
-        <div class="d-flex justify-content-between align-items-baseline">
-          <span class="readiness__item">{{ t('system.readiness.scaleStart') }}</span>
-          <span class="readiness__item">{{ t('system.readiness.scaleEnd') }}</span>
-        </div>
-        <div class="readiness__scale" aria-hidden="true"></div>
-
-        <div class="readiness__items">
-          <div v-for="s in STATUS_COUNTS" :key="s.status" class="readiness__item">
-            <div class="readiness__swatch" :style="{ background: s.token }" aria-hidden="true"></div>
-            <strong>
+        <div class="readiness__row">
+          <div
+            v-for="s in STATUS_COUNTS"
+            :key="s.status"
+            class="readiness__cell"
+            :style="{ '--swatch': s.token }"
+          >
+            <p class="readiness__count mb-0">{{ s.count }}</p>
+            <p class="readiness__name mb-0">
               <span aria-hidden="true">{{ s.glyph }}</span>
               {{ t(`common.status.${s.status}`) }}
-            </strong>
-            {{ countPhrase(s.count, 'system.readiness.unit') }}
+            </p>
+            <p class="readiness__hint mb-0">{{ countPhrase(s.count, 'system.readiness.unit') }}</p>
           </div>
         </div>
       </div>
@@ -68,7 +71,7 @@ const sections = computed(() => [
   <section id="architecture" class="section">
     <div class="container">
       <div class="section-head">
-        <p class="eyebrow">{{ t('system.stage.eyebrow') }}</p>
+        <p class="eyebrow">{{ t('common.nav.items.architecture') }}</p>
         <h2 class="headline--underlined">{{ t('system.architecture.title') }}</h2>
         <p class="lead mt-3">{{ t('system.architecture.lead') }}</p>
       </div>
@@ -82,13 +85,12 @@ const sections = computed(() => [
             </div>
             <div class="stage-block__body">
               <div v-for="mod in stage.modules" :key="mod.id" class="module">
-                <div class="module__top">
-                  <span class="module__name">
-                    {{ mod.n }}. {{ t(`system.modules.${mod.id}.name`) }}
-                  </span>
-                </div>
+                <p class="module__name mb-1">
+                  <span class="module__num">{{ String(mod.n).padStart(2, '0') }}</span>
+                  {{ t(`system.modules.${mod.id}.name`) }}
+                </p>
                 <StatusChip :status="mod.status" />
-                <p class="module__note mt-2 mb-0">{{ t(`system.modules.${mod.id}.note`) }}</p>
+                <p class="module__note mb-0">{{ t(`system.modules.${mod.id}.note`) }}</p>
               </div>
             </div>
           </div>
@@ -108,11 +110,12 @@ const sections = computed(() => [
 
       <div class="row g-3">
         <div v-for="(p, i) in t('system.partners.items')" :key="i" class="col-md-6">
-          <article class="tile">
-            <p class="tile__index">{{ String(i + 1).padStart(2, '0') }}</p>
-            <h3>{{ p.title }}</h3>
-            <p class="tile__body">{{ p.body }}</p>
-            <p class="tile__foot mb-0">{{ p.modules }}</p>
+          <article class="tile tile--text">
+            <div class="tile__body">
+              <h3>{{ p.title }}</h3>
+              <p class="tile__text">{{ p.body }}</p>
+              <p class="tile__meta mb-0">{{ p.modules }}</p>
+            </div>
           </article>
         </div>
       </div>
@@ -129,30 +132,25 @@ const sections = computed(() => [
         </div>
         <div class="col-lg-6">
           <div class="contact-card">
-            <dl class="row mb-0">
-              <dt class="col-5 text-muted-dafe" style="font-size: 0.8125rem">
-                {{ t('system.contact.teamLabel') }}
-              </dt>
-              <dd class="col-7 fw-bold">{{ t('system.contact.teamValue') }}</dd>
-
-              <dt class="col-5 text-muted-dafe" style="font-size: 0.8125rem">
-                {{ t('system.contact.focusLabel') }}
-              </dt>
-              <dd class="col-7 fw-bold">{{ t('system.contact.focusValue') }}</dd>
-
-              <dt class="col-5 text-muted-dafe" style="font-size: 0.8125rem">
-                {{ t('system.contact.langsLabel') }}
-              </dt>
-              <dd class="col-7 fw-bold">{{ t('system.contact.langsValue') }}</dd>
-
-              <dt class="col-5 text-muted-dafe" style="font-size: 0.8125rem">
-                {{ t('system.contact.demoLabel') }}
-              </dt>
-              <dd class="col-7 mb-0">
-                <a :href="LINKS.demo" target="_blank" rel="noopener" class="fw-bold">
-                  Hugging Face Space
-                </a>
-              </dd>
+            <dl class="dl-rows">
+              <div>
+                <dt>{{ t('system.contact.teamLabel') }}</dt>
+                <dd>{{ t('system.contact.teamValue') }}</dd>
+              </div>
+              <div>
+                <dt>{{ t('system.contact.focusLabel') }}</dt>
+                <dd>{{ t('system.contact.focusValue') }}</dd>
+              </div>
+              <div>
+                <dt>{{ t('system.contact.langsLabel') }}</dt>
+                <dd>{{ t('system.contact.langsValue') }}</dd>
+              </div>
+              <div>
+                <dt>{{ t('system.contact.demoLabel') }}</dt>
+                <dd>
+                  <a :href="LINKS.demo" target="_blank" rel="noopener">Hugging Face Space</a>
+                </dd>
+              </div>
             </dl>
 
             <div class="btn-row mt-4">

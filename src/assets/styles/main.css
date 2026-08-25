@@ -1,6 +1,16 @@
 /* ==========================================================================
-   DAFE Steel — Base + component layer
-   Written with CSS logical properties so the entire UI mirrors under dir="rtl".
+   DAFE Steel — Base + components
+
+   Component vocabulary follows the HYDAC reference: content stage with a
+   photographic background, section jump menu, image-led tile grid, promo
+   teaser, key-figure row, downloads list, contact card.
+
+   Flat by default: no elevation on rest, no hover lift, no glow, no
+   gradient text or gradient rules. Emphasis comes from the solid red
+   underline and generous whitespace.
+
+   Written with CSS logical properties so the whole UI mirrors under
+   dir="rtl" without a second stylesheet.
    ========================================================================== */
 
 *,
@@ -11,14 +21,14 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--dafe-header-height) + 1rem);
+  scroll-padding-top: calc(var(--dafe-header-height) + 4rem);
 }
 
 body {
   margin: 0;
   font-family: var(--dafe-font-body);
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.6;
   color: var(--dafe-ink);
   background: var(--dafe-surface);
   -webkit-font-smoothing: antialiased;
@@ -31,20 +41,24 @@ h4,
 h5 {
   font-family: var(--dafe-font-display);
   font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
   color: var(--dafe-ink);
   margin: 0;
 }
 
+/* Restrained scale — the reference tops out around 3rem, not 4.75rem. */
 h1 {
-  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-size: clamp(1.875rem, 3.6vw, 2.875rem);
 }
 h2 {
-  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
 }
 h3 {
-  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+  font-size: 1.125rem;
+}
+h4 {
+  font-size: 1rem;
 }
 
 p {
@@ -65,7 +79,7 @@ img {
 }
 
 :focus-visible {
-  outline: 3px solid var(--dafe-orange);
+  outline: 2px solid var(--dafe-primary);
   outline-offset: 2px;
 }
 
@@ -76,86 +90,77 @@ img {
   inset-block-start: -100px;
   z-index: 2000;
   padding: 0.6rem 1rem;
-  border-radius: var(--dafe-radius-sm);
   background: var(--dafe-ink);
   color: #fff;
   font-weight: 700;
-  transition: inset-block-start 0.15s ease;
 }
 .skip-link:focus {
-  inset-block-start: 1rem;
+  inset-block-start: 0.5rem;
   text-decoration: none;
 }
 
 /* --- Typographic helpers -------------------------------------------------- */
 .eyebrow {
-  font-family: var(--dafe-font-body);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--dafe-primary);
-  margin-block-end: 0.85rem;
-}
-/* On dark surfaces deep red drops below AA, so the eyebrow switches to
-   yellow (8.3:1). The hero stage counts as a dark surface. */
-.section--dark .eyebrow,
-.stage .eyebrow,
-.promo .eyebrow {
-  color: var(--dafe-yellow);
+  margin-block-end: 0.6rem;
 }
 
-/* HYDAC's signature underlined headline, re-cut with the DAFE gradient. */
+/* The reference's signature: a solid rule under the headline. */
 .headline--underlined {
   position: relative;
   display: inline-block;
-  padding-block-end: 0.7rem;
+  padding-block-end: 0.6rem;
 }
 .headline--underlined::after {
   content: '';
   position: absolute;
   inset-block-end: 0;
   inset-inline-start: 0;
-  width: clamp(64px, 22%, 132px);
-  height: 5px;
-  border-radius: 3px;
-  background: var(--dafe-gradient);
+  width: 72px;
+  height: 4px;
+  background: var(--dafe-primary);
+}
+.on-dark .headline--underlined::after,
+.stage .headline--underlined::after {
+  background: var(--dafe-yellow);
 }
 
 .lead {
   font-size: 1.0625rem;
+  color: var(--dafe-ink-2);
+  max-width: 68ch;
+}
+.subline {
   color: var(--dafe-ink-3);
-  max-width: 62ch;
+  max-width: 72ch;
 }
-.section--dark .lead,
-.stage .lead {
-  color: var(--dafe-grey-2);
-}
-
 .text-muted-dafe {
   color: var(--dafe-ink-3);
+}
+.mono {
+  font-family: var(--dafe-font-mono);
+  font-size: 0.8125rem;
+  direction: ltr;
+  unicode-bidi: embed;
 }
 
 /* --- Sections ------------------------------------------------------------- */
 .section {
-  padding-block: clamp(3rem, 7vw, 5.5rem);
+  padding-block: clamp(2.75rem, 5.5vw, 4.5rem);
 }
 .section--muted {
   background: var(--dafe-surface-2);
 }
-.section--dark {
-  background: var(--dafe-surface-dark);
-  color: #fff;
-}
-.section--dark h1,
-.section--dark h2,
-.section--dark h3,
-.section--dark h4 {
-  color: #fff;
+.section--tight {
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
 }
 .section-head {
-  max-width: 70ch;
-  margin-block-end: 2.5rem;
+  max-width: 74ch;
+  margin-block-end: 2rem;
 }
 
 /* --- Buttons -------------------------------------------------------------- */
@@ -164,18 +169,19 @@ img {
 .btn-dafe-light {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.4rem;
+  gap: 0.45rem;
+  padding: 0.65rem 1.25rem;
   border-radius: var(--dafe-radius-sm);
   font-family: var(--dafe-font-body);
   font-size: 0.9375rem;
   font-weight: 700;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
-.btn-dafe,
-.btn-dafe:hover {
+.btn-dafe:hover,
+.btn-dafe-ghost:hover,
+.btn-dafe-light:hover {
   text-decoration: none;
 }
 
@@ -196,19 +202,8 @@ img {
   color: var(--dafe-ink);
 }
 .btn-dafe-ghost:hover {
-  border-color: var(--dafe-orange);
-  color: var(--dafe-ink);
-  text-decoration: none;
-}
-.section--dark .btn-dafe-ghost,
-.stage .btn-dafe-ghost {
-  border-color: var(--dafe-line-dark);
-  color: #fff;
-}
-.section--dark .btn-dafe-ghost:hover,
-.stage .btn-dafe-ghost:hover {
-  border-color: var(--dafe-yellow);
-  color: #fff;
+  border-color: var(--dafe-primary);
+  color: var(--dafe-primary);
 }
 
 .btn-dafe-light {
@@ -217,19 +212,35 @@ img {
   color: var(--dafe-ink);
 }
 .btn-dafe-light:hover {
-  background: var(--dafe-yellow);
-  border-color: var(--dafe-yellow);
-  color: var(--dafe-ink);
-  text-decoration: none;
+  background: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+.stage .btn-dafe-ghost {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+.stage .btn-dafe-ghost:hover {
+  border-color: #fff;
+  color: #fff;
 }
 
-/* Arrow glyph flips automatically in RTL */
-.btn-arrow {
-  display: inline-block;
-  transition: transform 0.15s ease;
+/* Inline text link with a chevron, as used throughout the reference. */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--dafe-primary);
 }
-html[dir='rtl'] .btn-arrow {
-  transform: scaleX(-1);
+.link-arrow::after {
+  content: '›';
+  font-size: 1.2em;
+  line-height: 1;
+}
+html[dir='rtl'] .link-arrow::after {
+  content: '‹';
 }
 
 /* --- Header --------------------------------------------------------------- */
@@ -247,7 +258,7 @@ html[dir='rtl'] .btn-arrow {
   justify-content: space-between;
   gap: 1rem;
   min-height: var(--dafe-meta-height);
-  border-block-end: 1px solid var(--dafe-line);
+  border-block-end: 1px solid var(--dafe-line-soft);
   font-size: 0.8125rem;
 }
 .header-meta a {
@@ -283,7 +294,7 @@ html[dir='rtl'] .btn-arrow {
   text-decoration: none;
 }
 .brand-link img {
-  height: 40px;
+  height: 38px;
   width: auto;
   display: block;
 }
@@ -292,7 +303,6 @@ html[dir='rtl'] .btn-arrow {
 .nav-main {
   display: flex;
   align-items: stretch;
-  gap: 0.25rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -306,7 +316,7 @@ html[dir='rtl'] .btn-arrow {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding-inline: 0.9rem;
+  padding-inline: 0.85rem;
   font-size: 0.9375rem;
   font-weight: 600;
   color: var(--dafe-ink);
@@ -320,22 +330,20 @@ html[dir='rtl'] .btn-arrow {
   color: var(--dafe-primary);
   text-decoration: none;
 }
-.nav-main__link.is-active {
+.nav-main__link.is-active,
+.nav-main__link.is-open {
   border-block-end-color: var(--dafe-primary);
   color: var(--dafe-primary);
 }
-.nav-main__link.is-open {
-  color: var(--dafe-primary);
-}
-/* Physical borders on purpose: the caret is a geometric glyph that must always
-   point downwards, so it must not mirror under dir="rtl". */
+
+/* Physical borders on purpose: a geometric caret must not mirror in RTL. */
 .nav-caret {
-  width: 0.6em;
-  height: 0.6em;
+  width: 0.55em;
+  height: 0.55em;
   border-right: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg) translateY(-2px);
-  transition: transform 0.15s ease;
+  transition: transform 0.12s ease;
 }
 .nav-main__link.is-open .nav-caret {
   transform: rotate(-135deg) translateY(-2px);
@@ -348,25 +356,27 @@ html[dir='rtl'] .btn-arrow {
   inset-block-start: 100%;
   background: #fff;
   border-block-end: 1px solid var(--dafe-line);
-  box-shadow: var(--dafe-shadow-lg);
+  box-shadow: 0 12px 24px rgba(36, 40, 48, 0.1);
   padding-block: 2rem;
 }
 .mega__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 1.25rem 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem 2.5rem;
 }
 .mega__label {
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--dafe-grey);
-  margin-block-end: 0.75rem;
+  padding-block-end: 0.6rem;
+  margin-block-end: 0.6rem;
+  border-block-end: 1px solid var(--dafe-line-soft);
 }
 .mega__link {
   display: block;
-  padding-block: 0.3rem;
+  padding-block: 0.4rem;
   color: var(--dafe-ink);
   font-weight: 600;
   font-size: 0.9375rem;
@@ -380,7 +390,7 @@ html[dir='rtl'] .btn-arrow {
   font-weight: 400;
   font-size: 0.8125rem;
   color: var(--dafe-ink-3);
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 /* Language switcher */
@@ -391,7 +401,7 @@ html[dir='rtl'] .btn-arrow {
   overflow: hidden;
 }
 .lang-switch button {
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.55rem;
   font-size: 0.75rem;
   font-weight: 700;
   background: #fff;
@@ -411,8 +421,8 @@ html[dir='rtl'] .btn-arrow {
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   padding: 0;
   background: none;
   border: 1px solid var(--dafe-line);
@@ -422,21 +432,21 @@ html[dir='rtl'] .btn-arrow {
 .nav-toggle span {
   display: block;
   height: 2px;
+  width: 20px;
   margin-inline: auto;
-  width: 22px;
   background: var(--dafe-ink);
 }
 
 .mobile-nav {
   border-block-start: 1px solid var(--dafe-line);
-  padding-block: 1rem;
+  padding-block: 0.75rem;
   max-height: calc(100vh - var(--dafe-header-height));
   overflow-y: auto;
 }
 .mobile-nav__group + .mobile-nav__group {
-  margin-block-start: 1.25rem;
-  padding-block-start: 1.25rem;
-  border-block-start: 1px solid var(--dafe-line);
+  margin-block-start: 0.75rem;
+  padding-block-start: 0.75rem;
+  border-block-start: 1px solid var(--dafe-line-soft);
 }
 
 @media (max-width: 991.98px) {
@@ -449,62 +459,79 @@ html[dir='rtl'] .btn-arrow {
   }
 }
 
-/* --- Hero stage ----------------------------------------------------------- */
+/* --- Content stage (photographic hero) ----------------------------------- */
 .stage {
   position: relative;
-  background: var(--dafe-surface-dark);
+  background: var(--dafe-dark);
   color: #fff;
   overflow: hidden;
 }
-.stage::before {
-  content: '';
+/* Scaled slightly past the frame so the softened edges never show. */
+.stage__img {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    120% 120% at 100% 0%,
-    rgba(255, 154, 0, 0.22) 0%,
-    rgba(200, 29, 32, 0.12) 42%,
-    transparent 72%
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  transform: scale(1.04);
+}
+/* Directional scrim so the text side stays legible over the photograph. */
+.stage__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(23, 26, 31, 0.95) 0%,
+    rgba(23, 26, 31, 0.9) 45%,
+    rgba(23, 26, 31, 0.72) 100%
+  );
+}
+html[dir='rtl'] .stage__scrim {
+  background: linear-gradient(
+    to left,
+    rgba(23, 26, 31, 0.95) 0%,
+    rgba(23, 26, 31, 0.9) 45%,
+    rgba(23, 26, 31, 0.72) 100%
   );
 }
 .stage__inner {
   position: relative;
-  padding-block: clamp(3rem, 8vw, 6rem);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
 }
 .stage h1 {
   color: #fff;
 }
 .stage__text {
-  max-width: 60ch;
+  max-width: 56ch;
 }
-.stage__rule {
-  height: 5px;
-  border-radius: 3px;
-  background: var(--dafe-gradient);
-  width: 140px;
-  margin-block-end: 1.75rem;
+.stage .lead {
+  color: rgba(255, 255, 255, 0.82);
+}
+.stage .eyebrow {
+  color: var(--dafe-yellow);
 }
 
 /* Breadcrumb */
 .crumbs {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex-wrap: wrap;
   list-style: none;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1rem;
   padding: 0;
   font-size: 0.8125rem;
   font-weight: 600;
 }
 .crumbs a {
-  color: var(--dafe-grey-2);
+  color: rgba(255, 255, 255, 0.75);
 }
 .crumbs a:hover {
   color: #fff;
 }
 .crumbs__sep {
-  color: var(--dafe-ink-3);
+  color: rgba(255, 255, 255, 0.4);
 }
 .crumbs__current {
   color: #fff;
@@ -521,250 +548,296 @@ html[dir='rtl'] .btn-arrow {
 .jump-menu__list {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.75rem;
   list-style: none;
   margin: 0;
   padding: 0;
   overflow-x: auto;
-  min-height: 3.25rem;
+  min-height: 3rem;
 }
 .jump-menu__list a {
   display: inline-block;
   white-space: nowrap;
-  padding-block: 0.9rem;
+  padding-block: 0.85rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--dafe-ink-3);
+  color: var(--dafe-ink-2);
   border-block-end: 3px solid transparent;
 }
 .jump-menu__list a:hover {
   color: var(--dafe-primary);
-  border-block-end-color: var(--dafe-orange);
+  border-block-end-color: var(--dafe-primary);
   text-decoration: none;
 }
 
-/* --- Metric strip --------------------------------------------------------- */
-.metric {
-  padding: 1.5rem;
-  border-radius: var(--dafe-radius);
-  background: var(--dafe-surface-dark-2);
-  border: 1px solid var(--dafe-line-dark);
-  height: 100%;
+/* --- Key figures ---------------------------------------------------------- */
+.figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0;
+  border-block-start: 1px solid var(--dafe-line);
 }
-.metric__value {
+.figure-cell {
+  padding: 1.5rem 1.5rem 1.5rem 0;
+  border-inline-end: 1px solid var(--dafe-line);
+}
+.figure-cell:last-child {
+  border-inline-end: 0;
+}
+.figure-cell:not(:first-child) {
+  padding-inline-start: 1.5rem;
+}
+.figure-cell__value {
   font-family: var(--dafe-font-display);
-  font-size: clamp(1.875rem, 3.4vw, 2.5rem);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--dafe-yellow);
+  color: var(--dafe-primary);
 }
-.metric__label {
+.figure-cell__label {
   margin-block-start: 0.5rem;
   font-size: 0.875rem;
   font-weight: 700;
-  color: #fff;
 }
-.metric__note {
-  margin-block-start: 0.2rem;
+.figure-cell__note {
+  margin-block-start: 0.15rem;
   font-size: 0.8125rem;
-  color: var(--dafe-grey-2);
+  color: var(--dafe-ink-3);
 }
 
-/* --- Tile grid ------------------------------------------------------------ */
+@media (max-width: 575.98px) {
+  .figure-cell {
+    padding-inline: 0 !important;
+    border-inline-end: 0;
+    border-block-end: 1px solid var(--dafe-line);
+  }
+}
+
+/* --- Aspect-ratio utilities (reference uses the same idea) ---------------- */
+.ratio-box {
+  position: relative;
+  overflow: hidden;
+  background: var(--dafe-surface-3);
+}
+.ratio-box > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ratio-square {
+  aspect-ratio: 1 / 1;
+}
+.ratio-normal {
+  aspect-ratio: 4 / 3;
+}
+.ratio-wide {
+  aspect-ratio: 16 / 9;
+}
+/* Diagrams must never be cropped. */
+.ratio-box--contain > img {
+  object-fit: contain;
+  background: #fff;
+}
+
+/* --- Tiles (image-led card, the reference's core content unit) ------------ */
 .tile {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 1.6rem;
   background: #fff;
   border: 1px solid var(--dafe-line);
-  border-radius: var(--dafe-radius);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.12s ease;
 }
 .tile:hover {
-  border-color: var(--dafe-orange);
-  box-shadow: var(--dafe-shadow);
+  border-color: var(--dafe-grey-light);
 }
-.tile__index {
-  font-family: var(--dafe-font-display);
-  font-size: 0.8125rem;
-  font-weight: 800;
-  color: var(--dafe-orange);
-  letter-spacing: 0.08em;
-  margin-block-end: 0.6rem;
-}
-.tile h3 {
-  margin-block-end: 0.6rem;
+.tile__media {
+  border-block-end: 1px solid var(--dafe-line);
 }
 .tile__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1.25rem;
+}
+.tile h3 {
+  margin-block-end: 0.5rem;
+}
+.tile__text {
   font-size: 0.9375rem;
-  color: var(--dafe-ink-3);
+  color: var(--dafe-ink-2);
   flex-grow: 1;
 }
+.tile__meta {
+  margin-block-start: 0.85rem;
+  padding-block-start: 0.85rem;
+  border-block-start: 1px solid var(--dafe-line-soft);
+  font-size: 0.8125rem;
+  color: var(--dafe-ink-3);
+}
 .tile__foot {
-  margin-block-start: 1rem;
+  margin-block-start: 0.85rem;
+}
+
+/* Text-only variant: a rule replaces the image rather than faking one. */
+.tile--text .tile__body {
+  border-block-start: 3px solid var(--dafe-ink);
+}
+.tile--text:hover .tile__body {
+  border-block-start-color: var(--dafe-primary);
+}
+
+/* --- Figure mount (publication figures) ---------------------------------- */
+.figure-plate {
+  border: 1px solid var(--dafe-line);
+  background: #fff;
+}
+.figure-plate img {
+  display: block;
+  width: 100%;
+}
+.figure-plate figcaption {
+  padding: 0.85rem 1.1rem;
+  border-block-start: 1px solid var(--dafe-line);
+  background: var(--dafe-surface-2);
+  font-size: 0.8125rem;
+  color: var(--dafe-ink-3);
+}
+
+/* --- Promo teaser --------------------------------------------------------- */
+.promo {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--dafe-line);
+  background: #fff;
+}
+@media (min-width: 768px) {
+  .promo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.promo__text {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  align-self: center;
+}
+
+/* --- Readiness scale (discrete states, deliberately not a gradient) ------ */
+.readiness {
+  border: 1px solid var(--dafe-line);
+  background: #fff;
+}
+.readiness__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+.readiness__cell {
+  padding: 1.1rem 1.25rem;
+  border-inline-end: 1px solid var(--dafe-line);
+  border-block-start: 4px solid var(--swatch, var(--dafe-line));
+}
+.readiness__cell:last-child {
+  border-inline-end: 0;
+}
+.readiness__count {
+  font-family: var(--dafe-font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.readiness__name {
+  margin-block-start: 0.4rem;
   font-size: 0.875rem;
   font-weight: 700;
 }
+.readiness__hint {
+  font-size: 0.8125rem;
+  color: var(--dafe-ink-3);
+}
 
-/* --- Readiness / status chips -------------------------------------------- */
+/* --- Status chips --------------------------------------------------------- */
 .status-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
+  gap: 0.4rem;
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
   white-space: nowrap;
-  border: 1px solid currentColor;
 }
-/* Glyph carries the meaning too — status is never colour-only. */
+/* A glyph carries the state as well as the colour. */
 .status-chip__glyph {
-  font-size: 0.8em;
+  font-size: 0.85em;
   line-height: 1;
 }
-
 .status--operational {
-  color: #8a6500;
-  background: rgba(255, 196, 0, 0.16);
+  color: var(--dafe-status-operational-ink);
 }
 .status--development {
-  color: #9c5c00;
-  background: rgba(255, 154, 0, 0.14);
+  color: var(--dafe-status-development-ink);
 }
 .status--partner {
-  color: #b23c00;
-  background: rgba(255, 90, 0, 0.12);
+  color: var(--dafe-status-partner-ink);
 }
 .status--concept {
-  color: var(--dafe-red);
-  background: rgba(200, 29, 32, 0.09);
+  color: var(--dafe-status-concept-ink);
 }
 
-/* On dark surfaces the warm hues are legible directly (6.3:1 – 8.3:1). */
-.section--dark .status--operational,
-.on-dark .status--operational {
-  color: var(--dafe-yellow);
-  background: rgba(255, 196, 0, 0.14);
-}
-.section--dark .status--development,
-.on-dark .status--development {
-  color: var(--dafe-amber);
-  background: rgba(255, 154, 0, 0.14);
-}
-.section--dark .status--partner,
-.on-dark .status--partner {
-  color: #ff7a33;
-  background: rgba(255, 90, 0, 0.16);
-}
-.section--dark .status--concept,
-.on-dark .status--concept {
-  color: #f4666a;
-  background: rgba(200, 29, 32, 0.18);
-}
-
-/* Readiness legend */
-.readiness {
-  border: 1px solid var(--dafe-line-dark);
-  border-radius: var(--dafe-radius);
-  padding: 1.5rem;
-  background: var(--dafe-surface-dark-2);
-}
-.readiness__scale {
-  height: 8px;
-  border-radius: 4px;
-  background: var(--dafe-gradient);
-  margin-block: 1rem 1.25rem;
-}
-.readiness__items {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-}
-.readiness__item {
-  font-size: 0.8125rem;
-  color: var(--dafe-grey-2);
-}
-.readiness__item strong {
-  display: block;
-  color: #fff;
-  font-size: 0.875rem;
-  margin-block-end: 0.15rem;
-}
-.readiness__swatch {
-  width: 100%;
-  height: 4px;
-  border-radius: 2px;
-  margin-block-end: 0.6rem;
-}
-
-/* --- System pipeline ----------------------------------------------------- */
+/* --- System stage / module list ------------------------------------------ */
 .stage-block {
   border: 1px solid var(--dafe-line);
-  border-radius: var(--dafe-radius);
   background: #fff;
-  overflow: hidden;
   height: 100%;
 }
 .stage-block__head {
-  padding: 1.1rem 1.4rem;
+  padding: 1rem 1.25rem;
   background: var(--dafe-surface-2);
   border-block-end: 1px solid var(--dafe-line);
 }
 .stage-block__step {
-  font-family: var(--dafe-font-display);
   font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--dafe-orange);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dafe-primary);
 }
 .stage-block__title {
   font-family: var(--dafe-font-display);
   font-weight: 800;
-  font-size: 1.0625rem;
-  color: var(--dafe-ink);
-  margin-block-start: 0.15rem;
+  font-size: 1rem;
+  margin-block-start: 0.1rem;
 }
 .stage-block__body {
-  padding: 0.5rem 1.4rem 1.4rem;
+  padding-inline: 1.25rem;
 }
-
 .module {
-  padding-block: 1rem;
-  border-block-end: 1px solid var(--dafe-line);
+  padding-block: 0.95rem;
+  border-block-end: 1px solid var(--dafe-line-soft);
 }
 .module:last-child {
   border-block-end: 0;
-  padding-block-end: 0;
-}
-.module__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-block-end: 0.3rem;
 }
 .module__name {
   font-weight: 700;
   font-size: 0.9375rem;
-  color: var(--dafe-ink);
+}
+.module__num {
+  color: var(--dafe-grey);
+  font-family: var(--dafe-font-mono);
+  font-size: 0.8125rem;
+  margin-inline-end: 0.25rem;
 }
 .module__note {
+  margin-block-start: 0.3rem;
   font-size: 0.8125rem;
   color: var(--dafe-ink-3);
 }
 
-/* --- Data table ---------------------------------------------------------- */
+/* --- Tables --------------------------------------------------------------- */
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--dafe-line);
-  border-radius: var(--dafe-radius);
-}
-.section--dark .table-wrap {
-  border-color: var(--dafe-line-dark);
+  background: #fff;
 }
 .table-dafe {
   width: 100%;
@@ -774,27 +847,29 @@ html[dir='rtl'] .btn-arrow {
 }
 .table-dafe th,
 .table-dafe td {
-  padding: 0.85rem 1rem;
+  padding: 0.75rem 1rem;
   text-align: start;
-  border-block-end: 1px solid var(--dafe-line);
+  border-block-end: 1px solid var(--dafe-line-soft);
 }
 .table-dafe thead th {
   background: var(--dafe-surface-2);
-  font-family: var(--dafe-font-body);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--dafe-ink-3);
   white-space: nowrap;
+  border-block-end: 1px solid var(--dafe-line);
 }
-.table-dafe tbody tr:last-child td {
+.table-dafe tbody tr:last-child td,
+.table-dafe tbody tr:last-child th {
   border-block-end: 0;
 }
 .table-dafe tbody tr.is-ours {
-  background: rgba(255, 196, 0, 0.1);
+  background: #fff8e6;
 }
-.table-dafe tbody tr.is-ours td {
+.table-dafe tbody tr.is-ours td,
+.table-dafe tbody tr.is-ours th {
   font-weight: 700;
 }
 .table-num {
@@ -806,32 +881,22 @@ html[dir='rtl'] .btn-arrow {
   font-weight: 700;
 }
 .delta-neg {
-  color: var(--dafe-red);
+  color: var(--dafe-primary);
   font-weight: 700;
 }
 
-.section--dark .table-dafe th,
-.section--dark .table-dafe td {
-  border-block-end-color: var(--dafe-line-dark);
-  color: #fff;
-}
-.section--dark .table-dafe thead th {
-  background: var(--dafe-surface-dark-2);
-  color: var(--dafe-grey-2);
-}
-
-/* --- Bar chart (per-class AP) -------------------------------------------- */
+/* --- Bar chart ------------------------------------------------------------ */
 .bars {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 0.9rem;
 }
 .bar__head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  margin-block-end: 0.4rem;
+  margin-block-end: 0.35rem;
   font-size: 0.875rem;
 }
 .bar__name {
@@ -839,35 +904,28 @@ html[dir='rtl'] .btn-arrow {
 }
 .bar__track {
   position: relative;
-  height: 26px;
-  border-radius: var(--dafe-radius-sm);
-  background: var(--dafe-surface-2);
-  overflow: hidden;
-}
-.section--dark .bar__track {
-  background: var(--dafe-surface-dark-2);
+  height: 20px;
+  background: var(--dafe-surface-3);
 }
 .bar__fill {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
-  border-radius: var(--dafe-radius-sm);
 }
 .bar__fill--base {
-  background: var(--dafe-ink-3);
-  opacity: 0.55;
+  background: var(--dafe-grey-light);
 }
 .bar__fill--ours {
-  background: var(--dafe-gradient);
-  height: 12px;
-  inset-block-start: 14px;
+  background: var(--dafe-primary);
+  height: 8px;
+  inset-block-start: 6px;
 }
 .bar__legend {
   display: flex;
   gap: 1.25rem;
   flex-wrap: wrap;
   font-size: 0.8125rem;
-  margin-block-end: 1.5rem;
+  margin-block-end: 1.25rem;
 }
 .bar__key {
   display: inline-flex;
@@ -875,136 +933,147 @@ html[dir='rtl'] .btn-arrow {
   gap: 0.4rem;
 }
 .bar__key i {
-  width: 18px;
+  width: 16px;
   height: 8px;
-  border-radius: 2px;
   display: inline-block;
 }
 
-/* --- Dataflow diagram (DAFEGate) ---------------------------------------- */
+/* --- Dataflow (DAFEGate module) ------------------------------------------ */
 .flow {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 .flow__node {
-  border: 1px solid var(--dafe-line-dark);
-  border-radius: var(--dafe-radius);
-  padding: 1rem 1.2rem;
-  background: var(--dafe-surface-dark-2);
+  border: 1px solid var(--dafe-line);
+  background: #fff;
+  padding: 0.85rem 1rem;
 }
 .flow__node--branch {
-  border-color: var(--dafe-orange);
+  border-inline-start: 3px solid var(--dafe-primary);
 }
 .flow__node--out {
-  border-color: var(--dafe-yellow);
+  border-inline-start: 3px solid var(--dafe-ink);
 }
 .flow__tag {
   font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--dafe-amber);
+  color: var(--dafe-grey);
 }
 .flow__title {
-  font-family: var(--dafe-font-display);
   font-weight: 700;
-  color: #fff;
-  margin-block: 0.2rem;
   font-size: 0.9375rem;
-}
-.flow__math {
-  font-family: SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.8125rem;
-  color: var(--dafe-grey-2);
-  direction: ltr;
-  unicode-bidi: embed;
+  margin-block: 0.15rem;
 }
 .flow__arrow {
   text-align: center;
-  color: var(--dafe-orange);
-  font-size: 1.25rem;
+  color: var(--dafe-grey-light);
+  font-size: 1rem;
   line-height: 1;
 }
-/* Visual cue that the two branches are concurrent, not sequential. */
 .flow__parallel {
   position: relative;
-  padding-block-start: 0.6rem;
+  padding-block-start: 0.5rem;
 }
 .flow__parallel::before {
   content: '';
   position: absolute;
   inset-block-start: 0;
-  inset-inline: 12%;
-  height: 2px;
-  background: var(--dafe-orange);
-  opacity: 0.5;
+  inset-inline: 15%;
+  height: 1px;
+  background: var(--dafe-line);
 }
 
-/* --- Promo teaser -------------------------------------------------------- */
-.promo {
-  border-radius: var(--dafe-radius);
-  background: var(--dafe-surface-dark);
-  color: #fff;
-  padding: clamp(1.75rem, 4vw, 3rem);
-  position: relative;
-  overflow: hidden;
-}
-.promo::before {
-  content: '';
-  position: absolute;
-  inset-block: 0;
-  inset-inline-end: 0;
-  width: 45%;
-  background: radial-gradient(90% 90% at 100% 50%, rgba(255, 154, 0, 0.25), transparent 70%);
-}
-.promo > * {
-  position: relative;
-}
-
-/* --- Callout ------------------------------------------------------------- */
+/* --- Callout -------------------------------------------------------------- */
 .callout {
-  border-inline-start: 4px solid var(--dafe-orange);
-  background: var(--dafe-surface-2);
-  border-radius: var(--dafe-radius-sm);
+  border: 1px solid var(--dafe-line);
+  border-inline-start: 4px solid var(--dafe-primary);
+  background: #fff;
   padding: 1.1rem 1.35rem;
   font-size: 0.9375rem;
   color: var(--dafe-ink-2);
 }
-.section--dark .callout {
-  background: var(--dafe-surface-dark-2);
-  color: var(--dafe-grey-2);
+
+/* --- Definition list ----------------------------------------------------- */
+.dl-rows {
+  margin: 0;
+}
+.dl-rows > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.7rem;
+  border-block-end: 1px solid var(--dafe-line-soft);
+  font-size: 0.9375rem;
+}
+.dl-rows > div:last-child {
+  border-block-end: 0;
+}
+.dl-rows dt {
+  color: var(--dafe-ink-3);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.dl-rows dd {
+  margin: 0;
+  font-weight: 700;
+  text-align: end;
 }
 
 /* --- Contact card -------------------------------------------------------- */
 .contact-card {
   border: 1px solid var(--dafe-line);
-  border-radius: var(--dafe-radius);
-  padding: 1.75rem;
+  border-block-start: 4px solid var(--dafe-primary);
   background: #fff;
-  border-block-start: 4px solid transparent;
-  border-image: var(--dafe-gradient) 1;
-  border-image-width: 4px 0 0 0;
+  padding: 1.5rem;
+}
+
+/* --- Downloads ----------------------------------------------------------- */
+.download-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--dafe-line);
+  background: #fff;
+  font-weight: 600;
+  color: var(--dafe-ink);
+}
+.download-item:hover {
+  border-color: var(--dafe-primary);
+  color: var(--dafe-primary);
+  text-decoration: none;
+}
+.download-item__type {
+  font-family: var(--dafe-font-mono);
+  font-size: 0.75rem;
+  color: var(--dafe-grey);
 }
 
 /* --- Footer -------------------------------------------------------------- */
 .site-footer {
-  background: var(--dafe-surface-dark);
-  color: var(--dafe-grey-2);
-  padding-block: 3rem 1.5rem;
+  background: var(--dafe-surface-2);
+  border-block-start: 1px solid var(--dafe-line);
+  color: var(--dafe-ink-2);
+  padding-block: 2.5rem 1.25rem;
   font-size: 0.9375rem;
 }
 .site-footer h4 {
+  font-family: var(--dafe-font-body);
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
-  margin-block-end: 1rem;
+  color: var(--dafe-ink);
+  margin-block-end: 0.85rem;
 }
 .site-footer a {
-  color: var(--dafe-grey-2);
+  color: var(--dafe-ink-2);
 }
 .site-footer a:hover {
-  color: var(--dafe-yellow);
+  color: var(--dafe-primary);
 }
 .footer-list {
   list-style: none;
@@ -1012,22 +1081,23 @@ html[dir='rtl'] .btn-arrow {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-}
-.footer-bottom {
-  margin-block-start: 2.5rem;
-  padding-block-start: 1.5rem;
-  border-block-start: 1px solid var(--dafe-line-dark);
-  font-size: 0.8125rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
-  justify-content: space-between;
+  gap: 0.45rem;
 }
 .footer-brand img {
-  height: 34px;
+  height: 32px;
   width: auto;
-  margin-block-end: 1rem;
+  margin-block-end: 0.85rem;
+}
+.footer-bottom {
+  margin-block-start: 2rem;
+  padding-block-start: 1.25rem;
+  border-block-start: 1px solid var(--dafe-line);
+  font-size: 0.8125rem;
+  color: var(--dafe-ink-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
 }
 
 /* --- Back to top --------------------------------------------------------- */
@@ -1036,35 +1106,27 @@ html[dir='rtl'] .btn-arrow {
   inset-inline-end: 1.25rem;
   inset-block-end: 1.25rem;
   z-index: 1040;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 0;
-  background: var(--dafe-ink);
-  color: #fff;
-  font-size: 1.1rem;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--dafe-line);
+  background: #fff;
+  color: var(--dafe-ink);
+  font-size: 1rem;
   cursor: pointer;
-  box-shadow: var(--dafe-shadow);
 }
 .back-to-top:hover {
-  background: var(--dafe-primary);
+  border-color: var(--dafe-primary);
+  color: var(--dafe-primary);
 }
 
 /* --- Utilities ----------------------------------------------------------- */
-.stack-sm > * + * {
-  margin-block-start: 0.75rem;
-}
 .stack > * + * {
-  margin-block-start: 1.25rem;
+  margin-block-start: 1.1rem;
 }
 .btn-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-}
-.divider-gradient {
-  height: 4px;
-  background: var(--dafe-gradient);
+  gap: 0.65rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,83 +1,74 @@
 /* ==========================================================================
    DAFE Steel — Design Tokens
-   Derived from the DAFE Steel brand sheet.
-   Contrast-audited: warm hues are used on dark surfaces or as graphics only.
+
+   Structure mirrors the HYDAC reference system: a light editorial page,
+   one primary accent, a restrained neutral ramp, 10px radius, and the same
+   576/768/992/1200 breakpoints. Only the palette and display face are ours.
    ========================================================================== */
 
 :root {
-  /* --- Brand palette (verbatim from brand sheet) --- */
+  /* --- Brand palette (verbatim from the DAFE brand sheet) --- */
   --dafe-red: #c81d20;
   --dafe-orange: #ff5a00;
   --dafe-amber: #ff9a00;
   --dafe-yellow: #ffc400;
   --dafe-charcoal: #2b2f36;
 
-  /* --- Derived neutrals --- */
-  --dafe-ink: #2b2f36;
-  --dafe-ink-2: #3a3f48;
-  --dafe-ink-3: #565d68;
-  --dafe-grey: #7b828d;
-  --dafe-grey-2: #a8aeb8;
-  --dafe-line: #e3e6ea;
-  --dafe-line-dark: #3f4550;
+  /* --- Neutral ramp (HYDAC-style grey steps) --- */
+  --dafe-ink: #242830;
+  --dafe-ink-2: #444a54;
+  --dafe-ink-3: #656c78;
+  --dafe-grey: #7d7d7d;
+  --dafe-grey-light: #c4c4c4;
+  --dafe-line: #dcdfe3;
+  --dafe-line-soft: #ededed;
   --dafe-surface: #ffffff;
-  --dafe-surface-2: #f6f7f9;
-  --dafe-surface-dark: #21242a;
-  --dafe-surface-dark-2: #2b2f36;
+  --dafe-surface-2: #f6f6f6;
+  --dafe-surface-3: #ededed;
+
+  /* Dark is used only for the image stage overlay and figure mounts,
+     never as a general section background. */
+  --dafe-dark: #242830;
 
   /* --- Semantic roles ---
-     Deep red is the only warm hue that passes WCAG AA (5.8:1) on white,
-     so it carries all interactive meaning on light surfaces. */
+     Deep red is the only brand hue that passes WCAG AA on white (5.8:1),
+     so it is the single accent carrying interaction and emphasis. */
   --dafe-primary: var(--dafe-red);
   --dafe-primary-hover: #a5171a;
-  --dafe-accent: var(--dafe-amber);
 
-  /* --- Readiness scale (brand gradient as a maturity axis) --- */
+  /* --- Readiness scale (discrete states, not a continuum) --- */
   --dafe-status-concept: var(--dafe-red);
   --dafe-status-partner: var(--dafe-orange);
   --dafe-status-development: var(--dafe-amber);
   --dafe-status-operational: var(--dafe-yellow);
 
-  /* --- Signature gradient (logo / hero / scale only) --- */
-  --dafe-gradient: linear-gradient(
-    to right,
-    var(--dafe-red) 0%,
-    var(--dafe-orange) 38%,
-    var(--dafe-amber) 70%,
-    var(--dafe-yellow) 100%
-  );
+  /* Accessible text equivalents of the warm hues on light surfaces. */
+  --dafe-status-concept-ink: #b01a1d;
+  --dafe-status-partner-ink: #a83b00;
+  --dafe-status-development-ink: #8a5200;
+  --dafe-status-operational-ink: #7a5a00;
 
   /* --- Typography --- */
   --dafe-font-display: 'Montserrat', 'Segoe UI', arial, sans-serif;
-  --dafe-font-body: 'Inter', 'Segoe UI', arial, sans-serif;
+  --dafe-font-body: 'Inter', arial, helvetica, sans-serif;
+  --dafe-font-mono: SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 
-  /* --- Geometry --- */
+  /* --- Geometry (HYDAC values) --- */
   --dafe-radius: 10px;
-  --dafe-radius-sm: 6px;
+  --dafe-radius-sm: 4px;
   --dafe-header-height: 4rem;
   --dafe-meta-height: 2.25rem;
 
-  /* --- Elevation --- */
-  --dafe-shadow-sm: 0 1px 2px rgba(43, 47, 54, 0.08);
-  --dafe-shadow: 0 4px 16px rgba(43, 47, 54, 0.1);
-  --dafe-shadow-lg: 0 12px 32px rgba(43, 47, 54, 0.14);
+  /* --- Breakpoints, for reference --- */
+  --dafe-min-sm: 576px;
+  --dafe-min-md: 768px;
+  --dafe-min-lg: 992px;
+  --dafe-min-xl: 1200px;
 }
 
-/* Arabic typography: Cairo is a geometric Arabic face that pairs with
-   Montserrat's proportions, so the display/body split is preserved in RTL. */
+/* Arabic: Cairo carries both roles, keeping the display/body distinction
+   through weight rather than family. */
 html[lang='ar'] {
   --dafe-font-display: 'Cairo', 'Segoe UI', arial, sans-serif;
-  --dafe-font-body: 'Cairo', 'Segoe UI', arial, sans-serif;
-}
-
-/* The gradient encodes a low → high reading order (concept → operational),
-   so it must follow the text direction rather than stay physically left-to-right. */
-html[dir='rtl'] {
-  --dafe-gradient: linear-gradient(
-    to left,
-    var(--dafe-red) 0%,
-    var(--dafe-orange) 38%,
-    var(--dafe-amber) 70%,
-    var(--dafe-yellow) 100%
-  );
+  --dafe-font-body: 'Cairo', arial, helvetica, sans-serif;
 }

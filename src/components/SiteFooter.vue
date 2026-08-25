@@ -8,12 +8,11 @@ const year = new Date().getFullYear()
 
 <template>
   <footer class="site-footer">
-    <div class="divider-gradient" aria-hidden="true"></div>
-    <div class="container pt-5">
+    <div class="container">
       <div class="row g-4">
         <div class="col-lg-4">
           <div class="footer-brand">
-            <img src="/brand/dafe-logo-white.webp" :alt="t('common.brandName')" />
+            <img src="/brand/dafe-logo.webp" :alt="t('common.brandName')" />
             <p class="mb-0">{{ t('common.footer.builtBy') }}</p>
             <p class="mb-0 mt-2" style="font-size: 0.8125rem">{{ t('common.footer.program') }}</p>
           </div>

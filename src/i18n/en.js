@@ -69,6 +69,23 @@ export default {
     }
   },
 
+  figures: {
+    hero: 'Hot-rolled steel surface from the NEU-DET benchmark',
+    duality: 'Figure 1a — Morphological duality: linear crack defects versus surface texture anomalies.',
+    macro: 'Figure 2a — Macro architecture. DAFEGate v4 is inserted at the P3 stage of the YOLOv11n backbone.',
+    micro: 'Figure 2b — Inside DAFEGate v4: the edge branch, the variance texture branch, SE attention and the additive skip.',
+    featureMaps: 'Figure 3 — Activation maps at P3, showing the edge branch responding to crack structure.',
+    efficiency: 'Figure 6 — Accuracy against model complexity. +2.63pp mAP for +3.7% parameters at 145 FPS.',
+    defectAlt: 'Annotated {name} defect sample from NEU-DET',
+    compare: {
+      title: 'Baseline versus DAFEGate-YOLO',
+      lead: 'Left: the optimised YOLOv11n baseline. Right: DAFEGate-YOLO on the same image.',
+      crazing: 'Crazing — thin, low-contrast cracks',
+      pitted: 'Pitted surface — clustered micro-voids',
+      scratches: 'Scratches — long linear defects'
+    }
+  },
+
   home: {
     stage: {
       eyebrow: 'Industrial surface inspection',
@@ -287,6 +304,12 @@ export default {
         }
       ],
       gap: 'Across the eleven papers we reviewed, no existing model separates edge and texture processing into dedicated branches at the feature-extraction stage. That gap is what DAFEGate fills.'
+    },
+    defects: {
+      navLabel: 'Defect library',
+      eyebrow: 'Defect library',
+      title: 'The six defect classes, as the model sees them',
+      lead: 'Real annotated samples from the NEU-DET benchmark. Green boxes are ground-truth labels. Each class carries the AP our model reaches and the change against the baseline.'
     },
     module: {
       eyebrow: 'Architecture',
