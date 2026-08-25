@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="WE7R5D is ready for development in Alloy." />
+    <title>WE7R5D | Alloy Ready</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #0b0d10;
+        color: #f5f7fa;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background: #0b0d10;
+      }
+
+      main {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 40px 24px;
+      }
+
+      .shell {
+        width: min(100%, 1040px);
+        border: 1px solid #2b3038;
+        background: #11151a;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 24px;
+        border-bottom: 1px solid #2b3038;
+      }
+
+      .brand {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        color: #b7c0cb;
+        font-size: 13px;
+      }
+
+      .status::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #4ade80;
+        content: "";
+        box-shadow: 0 0 0 4px #173b26;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+        gap: 56px;
+        padding: 72px 64px;
+      }
+
+      .eyebrow {
+        margin: 0 0 20px;
+        color: #f59e0b;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 650px;
+        margin: 0;
+        font-size: clamp(44px, 7vw, 76px);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+      }
+
+      .intro {
+        max-width: 580px;
+        margin: 28px 0 0;
+        color: #b7c0cb;
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .details {
+        align-self: end;
+        border-top: 2px solid #f59e0b;
+      }
+
+      dl {
+        margin: 0;
+      }
+
+      .detail {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 17px 0;
+        border-bottom: 1px solid #2b3038;
+      }
+
+      dt {
+        color: #7f8a98;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      dd {
+        margin: 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 13px;
+        text-align: right;
+      }
+
+      footer {
+        padding: 18px 24px;
+        border-top: 1px solid #2b3038;
+        color: #7f8a98;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+      }
+
+      @media (max-width: 760px) {
+        main {
+          padding: 16px;
+        }
+
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .content {
+          grid-template-columns: 1fr;
+          gap: 48px;
+          padding: 52px 24px;
+        }
+
+        h1 {
+          font-size: clamp(42px, 15vw, 64px);
+        }
+
+        .intro {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="shell" aria-labelledby="page-title">
+        <header>
+          <p class="brand">WE7R5D</p>
+          <p class="status">Development environment online</p>
+        </header>
+
+        <div class="content">
+          <div>
+            <p class="eyebrow">Alloy workspace / ready</p>
+            <h1 id="page-title">Built to begin.</h1>
+            <p class="intro">
+              This repository now has a reliable Docker foundation for Alloy sessions. Replace this starter with the
+              product, keep the runtime contract, and iterate from a working preview.
+            </p>
+          </div>
+
+          <aside class="details" aria-label="Environment details">
+            <dl>
+              <div class="detail">
+                <dt>Runtime</dt>
+                <dd>Nginx / Docker</dd>
+              </div>
+              <div class="detail">
+                <dt>App port</dt>
+                <dd>3000</dd>
+              </div>
+              <div class="detail">
+                <dt>Network</dt>
+                <dd>Host</dd>
+              </div>
+              <div class="detail">
+                <dt>State</dt>
+                <dd>Healthy</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+
+        <footer>SESSION BASELINE / 2026</footer>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+services:
+  site:
+    image: nginx:1.27-alpine
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:3000/healthz | grep -q '^ok$'"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 3s
