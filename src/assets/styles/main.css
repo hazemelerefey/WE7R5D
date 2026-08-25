@@ -1,0 +1,1077 @@
+/* ==========================================================================
+   DAFE Steel — Base + component layer
+   Written with CSS logical properties so the entire UI mirrors under dir="rtl".
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--dafe-header-height) + 1rem);
+}
+
+body {
+  margin: 0;
+  font-family: var(--dafe-font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--dafe-ink);
+  background: var(--dafe-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--dafe-font-display);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--dafe-ink);
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+}
+h2 {
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+}
+h3 {
+  font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--dafe-primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 3px solid var(--dafe-orange);
+  outline-offset: 2px;
+}
+
+/* --- Skip link ------------------------------------------------------------ */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  inset-block-start: -100px;
+  z-index: 2000;
+  padding: 0.6rem 1rem;
+  border-radius: var(--dafe-radius-sm);
+  background: var(--dafe-ink);
+  color: #fff;
+  font-weight: 700;
+  transition: inset-block-start 0.15s ease;
+}
+.skip-link:focus {
+  inset-block-start: 1rem;
+  text-decoration: none;
+}
+
+/* --- Typographic helpers -------------------------------------------------- */
+.eyebrow {
+  font-family: var(--dafe-font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dafe-primary);
+  margin-block-end: 0.85rem;
+}
+/* On dark surfaces deep red drops below AA, so the eyebrow switches to
+   yellow (8.3:1). The hero stage counts as a dark surface. */
+.section--dark .eyebrow,
+.stage .eyebrow,
+.promo .eyebrow {
+  color: var(--dafe-yellow);
+}
+
+/* HYDAC's signature underlined headline, re-cut with the DAFE gradient. */
+.headline--underlined {
+  position: relative;
+  display: inline-block;
+  padding-block-end: 0.7rem;
+}
+.headline--underlined::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  width: clamp(64px, 22%, 132px);
+  height: 5px;
+  border-radius: 3px;
+  background: var(--dafe-gradient);
+}
+
+.lead {
+  font-size: 1.0625rem;
+  color: var(--dafe-ink-3);
+  max-width: 62ch;
+}
+.section--dark .lead,
+.stage .lead {
+  color: var(--dafe-grey-2);
+}
+
+.text-muted-dafe {
+  color: var(--dafe-ink-3);
+}
+
+/* --- Sections ------------------------------------------------------------- */
+.section {
+  padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+.section--muted {
+  background: var(--dafe-surface-2);
+}
+.section--dark {
+  background: var(--dafe-surface-dark);
+  color: #fff;
+}
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: #fff;
+}
+.section-head {
+  max-width: 70ch;
+  margin-block-end: 2.5rem;
+}
+
+/* --- Buttons -------------------------------------------------------------- */
+.btn-dafe,
+.btn-dafe-ghost,
+.btn-dafe-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--dafe-radius-sm);
+  font-family: var(--dafe-font-body);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.btn-dafe,
+.btn-dafe:hover {
+  text-decoration: none;
+}
+
+.btn-dafe {
+  background: var(--dafe-primary);
+  border-color: var(--dafe-primary);
+  color: #fff;
+}
+.btn-dafe:hover {
+  background: var(--dafe-primary-hover);
+  border-color: var(--dafe-primary-hover);
+  color: #fff;
+}
+
+.btn-dafe-ghost {
+  background: transparent;
+  border-color: var(--dafe-line);
+  color: var(--dafe-ink);
+}
+.btn-dafe-ghost:hover {
+  border-color: var(--dafe-orange);
+  color: var(--dafe-ink);
+  text-decoration: none;
+}
+.section--dark .btn-dafe-ghost,
+.stage .btn-dafe-ghost {
+  border-color: var(--dafe-line-dark);
+  color: #fff;
+}
+.section--dark .btn-dafe-ghost:hover,
+.stage .btn-dafe-ghost:hover {
+  border-color: var(--dafe-yellow);
+  color: #fff;
+}
+
+.btn-dafe-light {
+  background: #fff;
+  border-color: #fff;
+  color: var(--dafe-ink);
+}
+.btn-dafe-light:hover {
+  background: var(--dafe-yellow);
+  border-color: var(--dafe-yellow);
+  color: var(--dafe-ink);
+  text-decoration: none;
+}
+
+/* Arrow glyph flips automatically in RTL */
+.btn-arrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+html[dir='rtl'] .btn-arrow {
+  transform: scaleX(-1);
+}
+
+/* --- Header --------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1030;
+  background: #fff;
+  border-block-end: 1px solid var(--dafe-line);
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: var(--dafe-meta-height);
+  border-block-end: 1px solid var(--dafe-line);
+  font-size: 0.8125rem;
+}
+.header-meta a {
+  color: var(--dafe-ink-3);
+  font-weight: 500;
+}
+.header-meta a:hover {
+  color: var(--dafe-primary);
+}
+.header-meta__list {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: var(--dafe-header-height);
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.brand-link:hover {
+  text-decoration: none;
+}
+.brand-link img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* --- Main navigation ------------------------------------------------------ */
+.nav-main {
+  display: flex;
+  align-items: stretch;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: var(--dafe-header-height);
+}
+.nav-main__item {
+  display: flex;
+  align-items: stretch;
+}
+.nav-main__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding-inline: 0.9rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--dafe-ink);
+  background: none;
+  border: 0;
+  border-block-end: 3px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+.nav-main__link:hover {
+  color: var(--dafe-primary);
+  text-decoration: none;
+}
+.nav-main__link.is-active {
+  border-block-end-color: var(--dafe-primary);
+  color: var(--dafe-primary);
+}
+.nav-main__link.is-open {
+  color: var(--dafe-primary);
+}
+/* Physical borders on purpose: the caret is a geometric glyph that must always
+   point downwards, so it must not mirror under dir="rtl". */
+.nav-caret {
+  width: 0.6em;
+  height: 0.6em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.15s ease;
+}
+.nav-main__link.is-open .nav-caret {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+/* Mega-menu panel */
+.mega {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 100%;
+  background: #fff;
+  border-block-end: 1px solid var(--dafe-line);
+  box-shadow: var(--dafe-shadow-lg);
+  padding-block: 2rem;
+}
+.mega__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.25rem 2rem;
+}
+.mega__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dafe-grey);
+  margin-block-end: 0.75rem;
+}
+.mega__link {
+  display: block;
+  padding-block: 0.3rem;
+  color: var(--dafe-ink);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+.mega__link:hover {
+  color: var(--dafe-primary);
+  text-decoration: none;
+}
+.mega__desc {
+  display: block;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  color: var(--dafe-ink-3);
+  line-height: 1.45;
+}
+
+/* Language switcher */
+.lang-switch {
+  display: inline-flex;
+  border: 1px solid var(--dafe-line);
+  border-radius: var(--dafe-radius-sm);
+  overflow: hidden;
+}
+.lang-switch button {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: #fff;
+  border: 0;
+  color: var(--dafe-ink-3);
+  cursor: pointer;
+  font-family: inherit;
+}
+.lang-switch button.is-active {
+  background: var(--dafe-ink);
+  color: #fff;
+}
+
+/* Mobile toggle */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--dafe-line);
+  border-radius: var(--dafe-radius-sm);
+  cursor: pointer;
+}
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  margin-inline: auto;
+  width: 22px;
+  background: var(--dafe-ink);
+}
+
+.mobile-nav {
+  border-block-start: 1px solid var(--dafe-line);
+  padding-block: 1rem;
+  max-height: calc(100vh - var(--dafe-header-height));
+  overflow-y: auto;
+}
+.mobile-nav__group + .mobile-nav__group {
+  margin-block-start: 1.25rem;
+  padding-block-start: 1.25rem;
+  border-block-start: 1px solid var(--dafe-line);
+}
+
+@media (max-width: 991.98px) {
+  .nav-main,
+  .header-meta {
+    display: none;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+}
+
+/* --- Hero stage ----------------------------------------------------------- */
+.stage {
+  position: relative;
+  background: var(--dafe-surface-dark);
+  color: #fff;
+  overflow: hidden;
+}
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    120% 120% at 100% 0%,
+    rgba(255, 154, 0, 0.22) 0%,
+    rgba(200, 29, 32, 0.12) 42%,
+    transparent 72%
+  );
+}
+.stage__inner {
+  position: relative;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+.stage h1 {
+  color: #fff;
+}
+.stage__text {
+  max-width: 60ch;
+}
+.stage__rule {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--dafe-gradient);
+  width: 140px;
+  margin-block-end: 1.75rem;
+}
+
+/* Breadcrumb */
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.crumbs a {
+  color: var(--dafe-grey-2);
+}
+.crumbs a:hover {
+  color: #fff;
+}
+.crumbs__sep {
+  color: var(--dafe-ink-3);
+}
+.crumbs__current {
+  color: #fff;
+}
+
+/* --- Section jump menu ---------------------------------------------------- */
+.jump-menu {
+  background: #fff;
+  border-block-end: 1px solid var(--dafe-line);
+  position: sticky;
+  inset-block-start: var(--dafe-header-height);
+  z-index: 1020;
+}
+.jump-menu__list {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  min-height: 3.25rem;
+}
+.jump-menu__list a {
+  display: inline-block;
+  white-space: nowrap;
+  padding-block: 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dafe-ink-3);
+  border-block-end: 3px solid transparent;
+}
+.jump-menu__list a:hover {
+  color: var(--dafe-primary);
+  border-block-end-color: var(--dafe-orange);
+  text-decoration: none;
+}
+
+/* --- Metric strip --------------------------------------------------------- */
+.metric {
+  padding: 1.5rem;
+  border-radius: var(--dafe-radius);
+  background: var(--dafe-surface-dark-2);
+  border: 1px solid var(--dafe-line-dark);
+  height: 100%;
+}
+.metric__value {
+  font-family: var(--dafe-font-display);
+  font-size: clamp(1.875rem, 3.4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--dafe-yellow);
+}
+.metric__label {
+  margin-block-start: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+}
+.metric__note {
+  margin-block-start: 0.2rem;
+  font-size: 0.8125rem;
+  color: var(--dafe-grey-2);
+}
+
+/* --- Tile grid ------------------------------------------------------------ */
+.tile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.6rem;
+  background: #fff;
+  border: 1px solid var(--dafe-line);
+  border-radius: var(--dafe-radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tile:hover {
+  border-color: var(--dafe-orange);
+  box-shadow: var(--dafe-shadow);
+}
+.tile__index {
+  font-family: var(--dafe-font-display);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: var(--dafe-orange);
+  letter-spacing: 0.08em;
+  margin-block-end: 0.6rem;
+}
+.tile h3 {
+  margin-block-end: 0.6rem;
+}
+.tile__body {
+  font-size: 0.9375rem;
+  color: var(--dafe-ink-3);
+  flex-grow: 1;
+}
+.tile__foot {
+  margin-block-start: 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* --- Readiness / status chips -------------------------------------------- */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border: 1px solid currentColor;
+}
+/* Glyph carries the meaning too — status is never colour-only. */
+.status-chip__glyph {
+  font-size: 0.8em;
+  line-height: 1;
+}
+
+.status--operational {
+  color: #8a6500;
+  background: rgba(255, 196, 0, 0.16);
+}
+.status--development {
+  color: #9c5c00;
+  background: rgba(255, 154, 0, 0.14);
+}
+.status--partner {
+  color: #b23c00;
+  background: rgba(255, 90, 0, 0.12);
+}
+.status--concept {
+  color: var(--dafe-red);
+  background: rgba(200, 29, 32, 0.09);
+}
+
+/* On dark surfaces the warm hues are legible directly (6.3:1 – 8.3:1). */
+.section--dark .status--operational,
+.on-dark .status--operational {
+  color: var(--dafe-yellow);
+  background: rgba(255, 196, 0, 0.14);
+}
+.section--dark .status--development,
+.on-dark .status--development {
+  color: var(--dafe-amber);
+  background: rgba(255, 154, 0, 0.14);
+}
+.section--dark .status--partner,
+.on-dark .status--partner {
+  color: #ff7a33;
+  background: rgba(255, 90, 0, 0.16);
+}
+.section--dark .status--concept,
+.on-dark .status--concept {
+  color: #f4666a;
+  background: rgba(200, 29, 32, 0.18);
+}
+
+/* Readiness legend */
+.readiness {
+  border: 1px solid var(--dafe-line-dark);
+  border-radius: var(--dafe-radius);
+  padding: 1.5rem;
+  background: var(--dafe-surface-dark-2);
+}
+.readiness__scale {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--dafe-gradient);
+  margin-block: 1rem 1.25rem;
+}
+.readiness__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+.readiness__item {
+  font-size: 0.8125rem;
+  color: var(--dafe-grey-2);
+}
+.readiness__item strong {
+  display: block;
+  color: #fff;
+  font-size: 0.875rem;
+  margin-block-end: 0.15rem;
+}
+.readiness__swatch {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  margin-block-end: 0.6rem;
+}
+
+/* --- System pipeline ----------------------------------------------------- */
+.stage-block {
+  border: 1px solid var(--dafe-line);
+  border-radius: var(--dafe-radius);
+  background: #fff;
+  overflow: hidden;
+  height: 100%;
+}
+.stage-block__head {
+  padding: 1.1rem 1.4rem;
+  background: var(--dafe-surface-2);
+  border-block-end: 1px solid var(--dafe-line);
+}
+.stage-block__step {
+  font-family: var(--dafe-font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--dafe-orange);
+}
+.stage-block__title {
+  font-family: var(--dafe-font-display);
+  font-weight: 800;
+  font-size: 1.0625rem;
+  color: var(--dafe-ink);
+  margin-block-start: 0.15rem;
+}
+.stage-block__body {
+  padding: 0.5rem 1.4rem 1.4rem;
+}
+
+.module {
+  padding-block: 1rem;
+  border-block-end: 1px solid var(--dafe-line);
+}
+.module:last-child {
+  border-block-end: 0;
+  padding-block-end: 0;
+}
+.module__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-block-end: 0.3rem;
+}
+.module__name {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--dafe-ink);
+}
+.module__note {
+  font-size: 0.8125rem;
+  color: var(--dafe-ink-3);
+}
+
+/* --- Data table ---------------------------------------------------------- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--dafe-line);
+  border-radius: var(--dafe-radius);
+}
+.section--dark .table-wrap {
+  border-color: var(--dafe-line-dark);
+}
+.table-dafe {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  min-width: 560px;
+}
+.table-dafe th,
+.table-dafe td {
+  padding: 0.85rem 1rem;
+  text-align: start;
+  border-block-end: 1px solid var(--dafe-line);
+}
+.table-dafe thead th {
+  background: var(--dafe-surface-2);
+  font-family: var(--dafe-font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dafe-ink-3);
+  white-space: nowrap;
+}
+.table-dafe tbody tr:last-child td {
+  border-block-end: 0;
+}
+.table-dafe tbody tr.is-ours {
+  background: rgba(255, 196, 0, 0.1);
+}
+.table-dafe tbody tr.is-ours td {
+  font-weight: 700;
+}
+.table-num {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.delta-pos {
+  color: #14713c;
+  font-weight: 700;
+}
+.delta-neg {
+  color: var(--dafe-red);
+  font-weight: 700;
+}
+
+.section--dark .table-dafe th,
+.section--dark .table-dafe td {
+  border-block-end-color: var(--dafe-line-dark);
+  color: #fff;
+}
+.section--dark .table-dafe thead th {
+  background: var(--dafe-surface-dark-2);
+  color: var(--dafe-grey-2);
+}
+
+/* --- Bar chart (per-class AP) -------------------------------------------- */
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.bar__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-block-end: 0.4rem;
+  font-size: 0.875rem;
+}
+.bar__name {
+  font-weight: 700;
+}
+.bar__track {
+  position: relative;
+  height: 26px;
+  border-radius: var(--dafe-radius-sm);
+  background: var(--dafe-surface-2);
+  overflow: hidden;
+}
+.section--dark .bar__track {
+  background: var(--dafe-surface-dark-2);
+}
+.bar__fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  border-radius: var(--dafe-radius-sm);
+}
+.bar__fill--base {
+  background: var(--dafe-ink-3);
+  opacity: 0.55;
+}
+.bar__fill--ours {
+  background: var(--dafe-gradient);
+  height: 12px;
+  inset-block-start: 14px;
+}
+.bar__legend {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  font-size: 0.8125rem;
+  margin-block-end: 1.5rem;
+}
+.bar__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.bar__key i {
+  width: 18px;
+  height: 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* --- Dataflow diagram (DAFEGate) ---------------------------------------- */
+.flow {
+  display: grid;
+  gap: 0.75rem;
+}
+.flow__node {
+  border: 1px solid var(--dafe-line-dark);
+  border-radius: var(--dafe-radius);
+  padding: 1rem 1.2rem;
+  background: var(--dafe-surface-dark-2);
+}
+.flow__node--branch {
+  border-color: var(--dafe-orange);
+}
+.flow__node--out {
+  border-color: var(--dafe-yellow);
+}
+.flow__tag {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dafe-amber);
+}
+.flow__title {
+  font-family: var(--dafe-font-display);
+  font-weight: 700;
+  color: #fff;
+  margin-block: 0.2rem;
+  font-size: 0.9375rem;
+}
+.flow__math {
+  font-family: SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  color: var(--dafe-grey-2);
+  direction: ltr;
+  unicode-bidi: embed;
+}
+.flow__arrow {
+  text-align: center;
+  color: var(--dafe-orange);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+/* Visual cue that the two branches are concurrent, not sequential. */
+.flow__parallel {
+  position: relative;
+  padding-block-start: 0.6rem;
+}
+.flow__parallel::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 12%;
+  height: 2px;
+  background: var(--dafe-orange);
+  opacity: 0.5;
+}
+
+/* --- Promo teaser -------------------------------------------------------- */
+.promo {
+  border-radius: var(--dafe-radius);
+  background: var(--dafe-surface-dark);
+  color: #fff;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  position: relative;
+  overflow: hidden;
+}
+.promo::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 45%;
+  background: radial-gradient(90% 90% at 100% 50%, rgba(255, 154, 0, 0.25), transparent 70%);
+}
+.promo > * {
+  position: relative;
+}
+
+/* --- Callout ------------------------------------------------------------- */
+.callout {
+  border-inline-start: 4px solid var(--dafe-orange);
+  background: var(--dafe-surface-2);
+  border-radius: var(--dafe-radius-sm);
+  padding: 1.1rem 1.35rem;
+  font-size: 0.9375rem;
+  color: var(--dafe-ink-2);
+}
+.section--dark .callout {
+  background: var(--dafe-surface-dark-2);
+  color: var(--dafe-grey-2);
+}
+
+/* --- Contact card -------------------------------------------------------- */
+.contact-card {
+  border: 1px solid var(--dafe-line);
+  border-radius: var(--dafe-radius);
+  padding: 1.75rem;
+  background: #fff;
+  border-block-start: 4px solid transparent;
+  border-image: var(--dafe-gradient) 1;
+  border-image-width: 4px 0 0 0;
+}
+
+/* --- Footer -------------------------------------------------------------- */
+.site-footer {
+  background: var(--dafe-surface-dark);
+  color: var(--dafe-grey-2);
+  padding-block: 3rem 1.5rem;
+  font-size: 0.9375rem;
+}
+.site-footer h4 {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-block-end: 1rem;
+}
+.site-footer a {
+  color: var(--dafe-grey-2);
+}
+.site-footer a:hover {
+  color: var(--dafe-yellow);
+}
+.footer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.footer-bottom {
+  margin-block-start: 2.5rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid var(--dafe-line-dark);
+  font-size: 0.8125rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+}
+.footer-brand img {
+  height: 34px;
+  width: auto;
+  margin-block-end: 1rem;
+}
+
+/* --- Back to top --------------------------------------------------------- */
+.back-to-top {
+  position: fixed;
+  inset-inline-end: 1.25rem;
+  inset-block-end: 1.25rem;
+  z-index: 1040;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--dafe-ink);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: var(--dafe-shadow);
+}
+.back-to-top:hover {
+  background: var(--dafe-primary);
+}
+
+/* --- Utilities ----------------------------------------------------------- */
+.stack-sm > * + * {
+  margin-block-start: 0.75rem;
+}
+.stack > * + * {
+  margin-block-start: 1.25rem;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.divider-gradient {
+  height: 4px;
+  background: var(--dafe-gradient);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}

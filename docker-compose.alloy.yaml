@@ -1,14 +1,25 @@
 services:
   site:
-    image: nginx:1.27-alpine
+    image: node:22-bookworm
+    working_dir: /workspace
     network_mode: host
     restart: unless-stopped
+    environment:
+      IS_ALLOY: ${IS_ALLOY:-false}
+      # Vite needs an explicit poll-based watcher on bind-mounted volumes.
+      CHOKIDAR_USEPOLLING: "true"
     volumes:
-      - ./index.html:/usr/share/nginx/html/index.html:ro
-      - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - .:/workspace
+      - dafe_node_modules:/workspace/node_modules
+    command: >
+      bash -lc "npm install --no-audit --no-fund &&
+                npm run dev -- --host 0.0.0.0 --port 5173"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:3000/healthz | grep -q '^ok$'"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 3s
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:5173/ > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+volumes:
+  dafe_node_modules:
