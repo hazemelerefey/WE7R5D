@@ -120,7 +120,7 @@ function defectAlt(id) {
             </div>
             <div class="tile__body">
               <h3>{{ classNames[c.id] }}</h3>
-              <p class="tile__text mb-0" style="font-size: 0.8125rem">
+              <p class="tile__text mb-0">
                 {{ familyLabel(c.family) }}
               </p>
               <p class="tile__meta mb-0">
@@ -198,7 +198,7 @@ function defectAlt(id) {
         <div v-for="(n, i) in t('technology.module.notes')" :key="i" class="col-md-6 col-lg-3">
           <article class="tile tile--text">
             <div class="tile__body">
-              <h3 style="font-size: 1rem">{{ n.k }}</h3>
+              <h3>{{ n.k }}</h3>
               <p class="tile__text mb-0">{{ n.v }}</p>
             </div>
           </article>

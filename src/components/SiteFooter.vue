@@ -14,7 +14,7 @@ const year = new Date().getFullYear()
           <div class="footer-brand">
             <img src="/brand/dafe-logo.webp" :alt="t('common.brandName')" />
             <p class="mb-0">{{ t('common.footer.builtBy') }}</p>
-            <p class="mb-0 mt-2" style="font-size: 0.8125rem">{{ t('common.footer.program') }}</p>
+            <p class="mb-0 mt-2 subline">{{ t('common.footer.program') }}</p>
           </div>
         </div>
 

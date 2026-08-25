@@ -16,9 +16,9 @@
 
   /* --- Neutral ramp (HYDAC-style grey steps) --- */
   --dafe-ink: #242830;
-  --dafe-ink-2: #444a54;
-  --dafe-ink-3: #656c78;
-  --dafe-grey: #7d7d7d;
+  --dafe-ink-2: #3d434d;
+  --dafe-ink-3: #555e6b;
+  --dafe-grey: #69717d;
   --dafe-grey-light: #c4c4c4;
   --dafe-line: #dcdfe3;
   --dafe-line-soft: #ededed;
@@ -52,6 +52,19 @@
   --dafe-font-display: 'Montserrat', 'Segoe UI', arial, sans-serif;
   --dafe-font-body: 'Inter', arial, helvetica, sans-serif;
   --dafe-font-mono: SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* --- Type scale -------------------------------------------------------
+     14px is the minimum for support text; normal reading text starts at
+     17px. This keeps technical content readable on a presentation screen. */
+  --dafe-text-xs: 0.875rem;
+  --dafe-text-sm: 0.9375rem;
+  --dafe-text-md: 1rem;
+  --dafe-text-body: 1.0625rem;
+  --dafe-text-lead: 1.25rem;
+  --dafe-title-card: 1.25rem;
+  --dafe-title-section: clamp(2rem, 3.2vw, 3.25rem);
+  --dafe-title-page: clamp(2.75rem, 4.5vw, 4.75rem);
+  --dafe-title-hero: clamp(3.5rem, 6.5vw, 6.5rem);
 
   /* --- Geometry (HYDAC values) --- */
   --dafe-radius: 10px;

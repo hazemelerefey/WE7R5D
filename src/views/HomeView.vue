@@ -42,7 +42,7 @@ const labels = computed(() => METRIC_LABELS[locale.value] ?? METRIC_LABELS.en)
           <p class="figure-cell__note">{{ notes[m.id] }}</p>
         </div>
       </div>
-      <p class="subline mt-3 mb-0" style="font-size: 0.8125rem">{{ t('home.metricsNote') }}</p>
+      <p class="subline mt-3 mb-0">{{ t('home.metricsNote') }}</p>
     </div>
   </section>
 
@@ -147,7 +147,7 @@ const labels = computed(() => METRIC_LABELS[locale.value] ?? METRIC_LABELS.en)
               <dd>{{ t('home.techTeaser.resultValue') }}</dd>
             </div>
           </dl>
-          <p class="subline mt-2" style="font-size: 0.8125rem">
+          <p class="subline mt-2">
             {{ t('home.techTeaser.resultNote') }}
           </p>
           <div class="btn-row mt-4">
