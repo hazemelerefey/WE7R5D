@@ -6,6 +6,14 @@
    576/768/992/1200 breakpoints. Only the palette and display face are ours.
    ========================================================================== */
 
+@font-face {
+  font-family: 'Zodiak';
+  src: url('/fonts/Zodiak-Variable.woff2') format('woff2-variations');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 :root {
   /* --- Brand palette (verbatim from the DAFE brand sheet) --- */
   --dafe-red: #c81d20;
@@ -49,7 +57,7 @@
   --dafe-status-operational-ink: #7a5a00;
 
   /* --- Typography --- */
-  --dafe-font-display: 'Montserrat', 'Segoe UI', arial, sans-serif;
+  --dafe-font-display: 'Zodiak', Georgia, 'Times New Roman', serif;
   --dafe-font-body: 'Inter', arial, helvetica, sans-serif;
   --dafe-font-mono: SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 

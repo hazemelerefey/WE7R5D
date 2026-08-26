@@ -71,11 +71,16 @@ h2 {
   font-size: var(--dafe-title-section);
 }
 h3 {
+  font-family: var(--dafe-font-body);
   font-size: var(--dafe-title-card);
   line-height: 1.25;
 }
 h4 {
+  font-family: var(--dafe-font-body);
   font-size: 1.125rem;
+}
+h5 {
+  font-family: var(--dafe-font-body);
 }
 
 html[lang='ar'] h1,
